@@ -159,6 +159,7 @@
                     <Button x:Name="EraseAllGlyphData" Content="ERASE ALL" Margin="12,6,12,3" />
                     <Button x:Name="ImportGlyphData" Content="IMPORT IMAGE" Margin="12,6,12,3" />
                     <Button x:Name="ExportGlyphData" Content="EXPORT IMAGE" Margin="12,6,12,3" />
+                    <Button x:Name="ExportAllGlyphData" Content="EXPORT ALL IMAGES" Margin="12,6,12,3" />
                     <TextBlock Text="Export Scale" Margin="12,6,12,3" />
                     <TextBox x:Name="ExportScale" Margin="12,3,12,3" />
                 </StackPanel>

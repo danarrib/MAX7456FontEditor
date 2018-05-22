@@ -36,7 +36,7 @@ namespace MaxFontEditor.Shell
         {
             openFilePath = dialogService.GetFileOpenPath("Open MAX7456 Font File", "Font Files|*.mcm;*.h|MCM Files|*.mcm|Header Files|*.h");
 
-            if (openFilePath == null)
+            if (string.IsNullOrEmpty(openFilePath))
                 return;
 
             if (Path.GetExtension(openFilePath) == ".mcm")
@@ -51,7 +51,7 @@ namespace MaxFontEditor.Shell
 
         public void SaveDocument()
         {
-            if (openFilePath == null)
+            if (string.IsNullOrEmpty(openFilePath))
             {
                 SaveAsMCMDocument();
                 return;
@@ -71,10 +71,10 @@ namespace MaxFontEditor.Shell
         {
             string path = dialogService.GetFileSavePath("Save MCM Font File","mcm", "mcm File|*.mcm");
 
-            if (path == null)
+            if (string.IsNullOrEmpty(path))
                 return;
 
-            if (openFilePath == null)
+            if (string.IsNullOrEmpty(openFilePath))
                 openFilePath = path;
 
             CurrentGlyphSet.SaveMcmFile(path);
@@ -84,7 +84,7 @@ namespace MaxFontEditor.Shell
         {
             string path = dialogService.GetFileSavePath("Save Header Font File", "h", "Header File|*.h");
 
-            if (path == null)
+            if (string.IsNullOrEmpty(path))
                 return;
 
             if (openFilePath == null)
@@ -105,7 +105,7 @@ namespace MaxFontEditor.Shell
         {
             string path = dialogService.GetFileOpenPath("Import Glyph from Image", "Image Files|*.bmp;*.jpg;*.png;*.gif|Icon Files|*.ico|Meta Files|*.wmf;*.emf");
 
-            if (path == null)
+            if (string.IsNullOrEmpty(path))
                 return;
 
             Glyph first = SelectedGlyphs.FirstOrDefault();
@@ -124,7 +124,7 @@ namespace MaxFontEditor.Shell
 
         public void ExportGlyphData()
         {
-            if (openFilePath == null)
+            if (string.IsNullOrEmpty(openFilePath))
             {
                 dialogService.ShowError("Export Error", "You must save the current font file first!", null);
                 return;
@@ -136,6 +136,25 @@ namespace MaxFontEditor.Shell
             {
                 glyph.GenerateBitmap(ExportScale, Path.Combine(dir, String.Format("0x{0:x2}.png", glyph.Id)));
             }
+        }
+
+        public void ExportAllGlyphData()
+        {
+            if (string.IsNullOrEmpty(openFilePath))
+            {
+                dialogService.ShowError("Export Error", "You must save the current font file first!", null);
+                return;
+            }
+
+            string dir = Path.GetDirectoryName(openFilePath);
+
+            ExportScale = 1;
+
+            foreach (Glyph glyph in CurrentGlyphSet.Glyphs)
+            {
+                glyph.GenerateBitmap(ExportScale, Path.Combine(dir, String.Format("0x{0:x2}.png", glyph.Id)));
+            }
+
         }
 
         int exportScale;
