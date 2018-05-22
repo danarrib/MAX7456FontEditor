@@ -152,7 +152,7 @@ namespace MaxFontEditor.Shell
 
             foreach (Glyph glyph in CurrentGlyphSet.Glyphs)
             {
-                glyph.GenerateBitmap(ExportScale, Path.Combine(dir, String.Format("0x{0:x2}.png", glyph.Id)));
+                glyph.GenerateBitmap(ExportScale, Path.Combine(dir, String.Format("{0:000}", (glyph.Id + 1)) + ".png"));
             }
 
         }
